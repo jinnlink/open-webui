@@ -7,55 +7,72 @@
 	let dogContainer;
 	let celebrationText;
 	let redirectTimeout;
+	let confettiInterval;
 	
 	function createConfetti() {
-		const confetti = document.createElement('div');
-		confetti.className = 'confetti';
-		confetti.style.left = Math.random() * 100 + 'vw';
-		confetti.style.animationDelay = Math.random() * 3 + 's';
-		confetti.style.backgroundColor = `hsl(${Math.random() * 360}deg, 100%, 50%)`;
-		container.appendChild(confetti);
-		
-		// 在动画结束后移除彩带元素
-		confetti.addEventListener('animationend', () => {
-			confetti.remove();
-		});
+		try {
+			const confetti = document.createElement('div');
+			confetti.className = 'confetti';
+			confetti.style.left = Math.random() * 100 + 'vw';
+			confetti.style.animationDelay = Math.random() * 3 + 's';
+			confetti.style.backgroundColor = `hsl(${Math.random() * 360}deg, 100%, 50%)`;
+			container?.appendChild(confetti);
+			
+			// 在动画结束后移除彩带元素
+			confetti.addEventListener('animationend', () => {
+				confetti?.remove();
+			});
+		} catch (error) {
+			console.error('Error creating confetti:', error);
+		}
 	}
 	
-	onMount(() => {
-		// 如果用户已登录，直接跳转到主页
-		if ($user) {
-			goto('/chat');
-			return;
+	onMount(async () => {
+		try {
+			// 如果用户已登录，直接跳转到主页
+			if ($user) {
+				await goto('/chat');
+				return;
+			}
+
+			// 创建多个彩带
+			for (let i = 0; i < 50; i++) {
+				createConfetti();
+			}
+
+			// 每隔一段时间创建新的彩带
+			confettiInterval = setInterval(() => {
+				createConfetti();
+			}, 300);
+
+			// 15秒后跳转到登录页
+			redirectTimeout = setTimeout(async () => {
+				try {
+					clearInterval(confettiInterval);
+					await goto('/auth');
+				} catch (error) {
+					console.error('Navigation error:', error);
+				}
+			}, 15000);
+
+			// 小狗奔跑动画
+			if (dogContainer) {
+				const dog = document.createElement('div');
+				dog.className = 'running-dog';
+				dogContainer.appendChild(dog);
+			}
+
+			// 文字动画
+			if (celebrationText) {
+				celebrationText.classList.add('text-animation');
+			}
+		} catch (error) {
+			console.error('Error in celebration setup:', error);
 		}
-
-		// 创建多个彩带
-		for (let i = 0; i < 50; i++) {
-			createConfetti();
-		}
-
-		// 每隔一段时间创建新的彩带
-		const interval = setInterval(() => {
-			createConfetti();
-		}, 300);
-
-		// 15秒后跳转到登录页
-		redirectTimeout = setTimeout(() => {
-			clearInterval(interval);
-			goto('/auth');
-		}, 15000);
-
-		// 小狗奔跑动画
-		const dog = document.createElement('div');
-		dog.className = 'running-dog';
-		dogContainer.appendChild(dog);
-
-		// 文字动画
-		celebrationText.classList.add('text-animation');
 
 		return () => {
-			clearInterval(interval);
-			clearTimeout(redirectTimeout);
+			if (confettiInterval) clearInterval(confettiInterval);
+			if (redirectTimeout) clearTimeout(redirectTimeout);
 		};
 	});
 </script>
@@ -96,6 +113,7 @@
 		margin: 0;
 		padding: 20px;
 		background: linear-gradient(45deg, #ff0, #f0f, #0ff);
+		background-clip: text;
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
 		animation: rainbow 3s ease-in-out infinite;

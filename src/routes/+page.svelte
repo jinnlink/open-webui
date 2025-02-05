@@ -6,8 +6,12 @@
 
 	// 如果用户已登录，直接跳转到主页
 	onMount(async () => {
-		if ($user) {
-			goto('/chat');
+		try {
+			if ($user) {
+				await goto('/chat');
+			}
+		} catch (error) {
+			console.error('Navigation error:', error);
 		}
 	});
 </script>
