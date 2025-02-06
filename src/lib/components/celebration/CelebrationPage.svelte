@@ -6,6 +6,7 @@
 	let dogContainer;
 	let celebrationText;
 	let confettiInterval;
+	let visible = true;
 
 	function createConfetti() {
 		try {
@@ -27,6 +28,9 @@
 	
 	onMount(async () => {
 		try {
+			// 等待一小段时间再开始动画
+			await new Promise(resolve => setTimeout(resolve, 500));
+			
 			// 创建多个彩带
 			for (let i = 0; i < 30; i++) {
 				createConfetti();
@@ -48,6 +52,12 @@
 			if (celebrationText) {
 				celebrationText.classList.add('text-animation');
 			}
+
+			// 10秒后自动隐藏
+			setTimeout(() => {
+				visible = false;
+			}, 10000);
+			
 		} catch (error) {
 			console.error('Error in celebration setup:', error);
 		}
@@ -58,12 +68,14 @@
 	});
 </script>
 
+{#if visible}
 <div class="celebration-container" bind:this={container}>
 	<div class="text-container" bind:this={celebrationText}>
 		<h1>热烈庆祝翔宝贝诞辰</h1>
 	</div>
 	<div class="dog-container" bind:this={dogContainer}></div>
 </div>
+{/if}
 
 <style>
 	.celebration-container {
@@ -77,8 +89,9 @@
 		justify-content: center;
 		align-items: center;
 		overflow: hidden;
-		z-index: 20;
+		z-index: 100;
 		pointer-events: none;
+		background: transparent;
 	}
 
 	.text-container {
@@ -86,6 +99,7 @@
 		top: 20%;
 		text-align: center;
 		opacity: 0;
+		z-index: 101;
 	}
 
 	.text-container h1 {
@@ -107,6 +121,7 @@
 		pointer-events: none;
 		opacity: 0.8;
 		animation: fall 3s linear forwards;
+		z-index: 102;
 	}
 
 	.dog-container {
@@ -115,6 +130,7 @@
 		width: 100%;
 		height: 100px;
 		overflow: hidden;
+		z-index: 101;
 	}
 
 	.running-dog {
