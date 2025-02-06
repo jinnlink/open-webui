@@ -144,7 +144,75 @@
 	<title>
 		{`${$WEBUI_NAME}`}
 	</title>
+	<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
 </svelte:head>
+
+<style>
+	.animate-gradient {
+		background-size: 200% auto;
+		animation: gradient 8s linear infinite;
+	}
+
+	.animate-border {
+		position: relative;
+	}
+
+	.animate-border::before {
+		content: '';
+		position: absolute;
+		inset: -2px;
+		background: linear-gradient(90deg, #00ffff, #bf00ff, #00ffff);
+		background-size: 200% 100%;
+		animation: borderGradient 3s linear infinite;
+		border-radius: 1rem;
+		z-index: -1;
+	}
+
+	@keyframes borderGradient {
+		0% { background-position: 0% 0%; }
+		100% { background-position: 200% 0%; }
+	}
+
+	@keyframes gradient {
+		0% { background-position: 0% 50%; }
+		50% { background-position: 100% 50%; }
+		100% { background-position: 0% 50%; }
+	}
+
+	.mystic-text {
+		font-family: 'Cinzel', serif;
+		text-shadow: 0 0 15px rgba(141, 255, 249, 0.2);
+		letter-spacing: 0.05em;
+	}
+
+	.input-mystic {
+		background: rgba(0, 0, 0, 0.6);
+		border: 1px solid rgba(141, 255, 249, 0.1);
+		color: #8DFFF9;
+		transition: all 0.3s ease;
+	}
+
+	.input-mystic:focus {
+		border-color: rgba(141, 255, 249, 0.3);
+		box-shadow: 0 0 15px rgba(141, 255, 249, 0.1);
+	}
+
+	.btn-mystic {
+		background: rgba(0, 0, 0, 0.7);
+		border: 1px solid rgba(141, 255, 249, 0.2);
+		color: #8DFFF9;
+		font-family: 'Cinzel', serif;
+		letter-spacing: 0.1em;
+		transition: all 0.3s ease;
+	}
+
+	.btn-mystic:hover {
+		background: rgba(0, 0, 0, 0.8);
+		border-color: rgba(141, 255, 249, 0.4);
+		box-shadow: 0 0 20px rgba(141, 255, 249, 0.2);
+		transform: translateY(-2px);
+	}
+</style>
 
 <OnBoarding
 	bind:show={onboarding}
@@ -155,7 +223,7 @@
 />
 
 <div class="w-full h-screen max-h-[100dvh] text-white relative">
-	<div class="w-full h-full absolute top-0 left-0 bg-black dark:bg-black"></div>
+	<div class="w-full h-full absolute top-0 left-0 bg-black"></div>
 
 	<div class="w-full absolute top-0 left-0 right-0 h-8 drag-region" />
 
@@ -174,28 +242,23 @@
 					/>
 					<div class="absolute inset-0 rounded-xl shadow-[0_0_15px_rgba(0,255,255,0.15)] group-hover:shadow-[0_0_25px_rgba(0,255,255,0.25)] transition-shadow duration-300"></div>
 				</div>
-				<div class="text-2xl font-medium text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-purple-500 to-emerald-400 animate-gradient">
+				<div class="text-2xl font-medium mystic-text text-transparent bg-clip-text bg-gradient-to-r from-teal-200 via-emerald-200 to-cyan-200 animate-gradient">
 					{$WEBUI_NAME}
 				</div>
 			</div>
 		</div>
 
-		<div
-			class="fixed bg-transparent min-h-screen w-full flex justify-center font-primary z-40 text-gray-200"
-		>
+		<div class="fixed bg-transparent min-h-screen w-full flex justify-center font-primary z-40">
 			<div 
 				class="w-full sm:max-w-md px-10 min-h-screen flex flex-col text-center"
 				in:fly={{ y: 20, duration: 600, delay: 200 }}
 			>
 				{#if ($config?.features.auth_trusted_header ?? false) || $config?.features.auth === false}
 					<div class="my-auto pb-10 w-full">
-						<div
-							class="flex items-center justify-center gap-3 text-xl sm:text-2xl text-center font-semibold text-gray-200"
-						>
+						<div class="flex items-center justify-center gap-3 text-xl sm:text-2xl text-center font-semibold text-cyan-200 mystic-text">
 							<div>
 								{$i18n.t('Signing in to {{WEBUI_NAME}}', { WEBUI_NAME: $WEBUI_NAME })}
 							</div>
-
 							<div>
 								<Spinner />
 							</div>
@@ -204,50 +267,49 @@
 				{:else}
 					<div class="my-auto pb-10 w-full">
 						<form
-							class="flex flex-col justify-center backdrop-blur-lg bg-black/30 p-8 rounded-2xl shadow-[0_0_15px_rgba(0,255,255,0.15)] border border-emerald-900/30 hover:shadow-[0_0_25px_rgba(0,255,255,0.25)] transition-all duration-500"
+							class="flex flex-col justify-center backdrop-blur-lg bg-black/30 p-8 rounded-2xl animate-border"
 							on:submit={(e) => {
 								e.preventDefault();
 								submitHandler();
 							}}
 						>
 							<div class="mb-6">
-								<div class="text-2xl font-medium bg-gradient-to-r from-emerald-400 via-purple-500 to-emerald-400 bg-clip-text text-transparent animate-gradient">
+								<div class="text-2xl font-medium mystic-text bg-gradient-to-r from-teal-200 via-emerald-200 to-cyan-200 bg-clip-text text-transparent animate-gradient">
 									{#if mode === 'ldap'}
 										{$i18n.t(`Sign in to {{WEBUI_NAME}} with LDAP`, { WEBUI_NAME: $WEBUI_NAME })}
-									{:else if mode === 'signin'}
-										{$i18n.t(`Sign in to {{WEBUI_NAME}}`, { WEBUI_NAME: $WEBUI_NAME })}
-									{:else}
+									{:else if mode === 'signup'}
 										{$i18n.t(`Sign up to {{WEBUI_NAME}}`, { WEBUI_NAME: $WEBUI_NAME })}
+									{:else}
+										{$i18n.t(`Sign in to {{WEBUI_NAME}}`, { WEBUI_NAME: $WEBUI_NAME })}
 									{/if}
 								</div>
 							</div>
-
-							{#if mode === 'signup'}
-								<div class="mb-4">
-									<input
-										type="text"
-										class="w-full px-3 py-2 bg-black/30 dark:bg-black/30 border border-emerald-900/30 dark:border-emerald-700/30 rounded-xl focus:outline-none focus:border-emerald-500/50 dark:focus:border-emerald-500/50 placeholder-gray-500 text-gray-200"
-										placeholder={$i18n.t('Enter your name')}
-										bind:value={name}
-									/>
-								</div>
-							{/if}
 
 							{#if mode === 'ldap'}
 								<div class="mb-4">
 									<input
 										type="text"
-										class="w-full px-3 py-2 bg-black/30 dark:bg-black/30 border border-emerald-900/30 dark:border-emerald-700/30 rounded-xl focus:outline-none focus:border-emerald-500/50 dark:focus:border-emerald-500/50 placeholder-gray-500 text-gray-200"
-										placeholder={$i18n.t('Enter your LDAP username')}
+										class="w-full p-2 rounded-lg input-mystic"
+										placeholder={$i18n.t('LDAP Username')}
 										bind:value={ldapUsername}
 									/>
 								</div>
 							{:else}
+								{#if mode === 'signup'}
+									<div class="mb-4">
+										<input
+											type="text"
+											class="w-full p-2 rounded-lg input-mystic"
+											placeholder={$i18n.t('Name')}
+											bind:value={name}
+										/>
+									</div>
+								{/if}
 								<div class="mb-4">
 									<input
 										type="email"
-										class="w-full px-3 py-2 bg-black/30 dark:bg-black/30 border border-emerald-900/30 dark:border-emerald-700/30 rounded-xl focus:outline-none focus:border-emerald-500/50 dark:focus:border-emerald-500/50 placeholder-gray-500 text-gray-200"
-										placeholder={$i18n.t('Enter your email')}
+										class="w-full p-2 rounded-lg input-mystic"
+										placeholder={$i18n.t('Email')}
 										bind:value={email}
 									/>
 								</div>
@@ -256,24 +318,39 @@
 							<div class="mb-4">
 								<input
 									type="password"
-									class="w-full px-3 py-2 bg-black/30 dark:bg-black/30 border border-emerald-900/30 dark:border-emerald-700/30 rounded-xl focus:outline-none focus:border-emerald-500/50 dark:focus:border-emerald-500/50 placeholder-gray-500 text-gray-200"
-									placeholder={$i18n.t('Enter your password')}
+									class="w-full p-2 rounded-lg input-mystic"
+									placeholder={$i18n.t('Password')}
 									bind:value={password}
 								/>
 							</div>
 
-							<button
-								type="submit"
-								class="w-full py-2 px-4 bg-gradient-to-r from-emerald-600 to-purple-600 hover:from-emerald-500 hover:to-purple-500 text-white font-medium rounded-xl transition-colors duration-300 shadow-lg hover:shadow-emerald-500/20"
-							>
+							<button type="submit" class="w-full p-2 rounded-lg btn-mystic">
 								{#if mode === 'ldap'}
 									{$i18n.t('Sign in with LDAP')}
-								{:else if mode === 'signin'}
-									{$i18n.t('Sign in')}
-								{:else}
+								{:else if mode === 'signup'}
 									{$i18n.t('Sign up')}
+								{:else}
+									{$i18n.t('Sign in')}
 								{/if}
 							</button>
+
+							{#if mode !== 'ldap' && $config?.features.auth === true}
+								<div class="mt-4">
+									<button
+										type="button"
+										class="text-sm text-cyan-400 hover:text-cyan-300 mystic-text"
+										on:click={() => {
+											mode = mode === 'signin' ? 'signup' : 'signin';
+										}}
+									>
+										{#if mode === 'signin'}
+											{$i18n.t("Don't have an account? Sign up")}
+										{:else}
+											{$i18n.t('Already have an account? Sign in')}
+										{/if}
+									</button>
+								</div>
+							{/if}
 
 							{#if Object.keys($config?.oauth?.providers ?? {}).length > 0}
 								<div class="inline-flex items-center justify-center w-full mt-6">
@@ -404,22 +481,3 @@
 		</div>
 	{/if}
 </div>
-
-<style>
-	.animate-gradient {
-		background-size: 200% auto;
-		animation: gradient 8s linear infinite;
-	}
-	
-	@keyframes gradient {
-		0% {
-			background-position: 0% 50%;
-		}
-		50% {
-			background-position: 100% 50%;
-		}
-		100% {
-			background-position: 0% 50%;
-		}
-	}
-</style>

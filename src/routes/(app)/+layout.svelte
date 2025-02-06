@@ -179,7 +179,14 @@
 			});
 
 			if ($user.role === 'admin' && ($settings?.showChangelog ?? true)) {
-				showChangelog.set($settings?.version !== $config.version);
+				// 检查版本更新
+				if ($settings && $config) {
+					// 临时禁用更新日志显示
+					showChangelog.set(false);
+					if ($settings.version !== $config.version) {
+						await saveSettings({ version: $config.version });
+					}
+				}
 			}
 
 			if ($page.url.searchParams.get('temporary-chat') === 'true') {
