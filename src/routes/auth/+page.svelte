@@ -15,6 +15,7 @@
 
 	import Spinner from '$lib/components/common/Spinner.svelte';
 	import OnBoarding from '$lib/components/OnBoarding.svelte';
+	import CelebrationPage from '$lib/components/celebration/CelebrationPage.svelte';
 
 	const i18n = getContext('i18n');
 
@@ -127,6 +128,8 @@
 		{`${$WEBUI_NAME}`}
 	</title>
 </svelte:head>
+
+<CelebrationPage />
 
 <OnBoarding
 	bind:show={onboarding}
