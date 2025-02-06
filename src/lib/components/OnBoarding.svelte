@@ -19,8 +19,8 @@
 				<div class=" self-center">
 					<img
 						crossorigin="anonymous"
-						src="{WEBUI_BASE_URL}/static/favicon.png"
-						class=" w-6 rounded-full"
+						src="{WEBUI_BASE_URL}/static/splash.png"
+						class="w-16 rounded-xl dark:invert hover:scale-110 transition-transform animate-pulse"
 						alt="logo"
 					/>
 				</div>
@@ -37,8 +37,8 @@
 
 		<div class="relative bg-transparent w-full min-h-screen flex z-10">
 			<div class="flex flex-col justify-end w-full items-center pb-10 text-center">
-				<div class="text-5xl lg:text-7xl font-secondary">
-					<div class="bg-gradient-to-r from-emerald-400 via-purple-500 to-emerald-400 bg-clip-text text-transparent animate-gradient">
+				<div class="text-5xl lg:text-7xl font-secondary mystic-text">
+					<div class="bg-gradient-to-r from-teal-200 via-emerald-200 to-cyan-200 bg-clip-text text-transparent animate-gradient">
 						<Marquee
 							duration={5000}
 							words={[
@@ -55,8 +55,7 @@
 							]}
 						/>
 					</div>
-
-					<div class="mt-2 text-lg text-gray-300">{$i18n.t(`wherever you are`)}</div>
+					<div class="mt-2 text-lg text-gray-300 mystic-text">{$i18n.t(`wherever you are`)}</div>
 				</div>
 
 				<div class="flex justify-center mt-8">
@@ -69,7 +68,7 @@
 						>
 							<ArrowRightCircle className="size-6" />
 						</button>
-						<div class="mt-3 font-primary text-lg font-medium text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-purple-500 to-emerald-400 animate-gradient">
+						<div class="mt-3 font-primary text-lg font-medium mystic-text text-transparent bg-clip-text bg-gradient-to-r from-teal-200 via-emerald-200 to-cyan-200 animate-gradient">
 							{$i18n.t(`Get started`)}
 						</div>
 					</div>
@@ -79,10 +78,15 @@
 	</div>
 {/if}
 
+<svelte:head>
+	<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+</svelte:head>
+
 <style>
 	.animate-gradient {
 		background-size: 200% auto;
 		animation: gradient 8s linear infinite;
+		transition: all 0.3s ease;
 	}
 	
 	@keyframes gradient {
@@ -95,5 +99,15 @@
 		100% {
 			background-position: 0% 50%;
 		}
+	}
+	
+	.mystic-text {
+		font-family: 'Ma Shan Zheng', '华文行楷', STXingkai, '楷体', KaiTi, serif;
+		text-shadow: 
+			0 0 15px rgba(141, 255, 249, 0.3),
+			0 0 30px rgba(141, 255, 249, 0.2);
+		letter-spacing: 0.2em;
+		font-weight: 400;
+		-webkit-text-stroke: 0.5px rgba(141, 255, 249, 0.3);
 	}
 </style>

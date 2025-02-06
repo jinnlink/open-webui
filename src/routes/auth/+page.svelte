@@ -144,7 +144,8 @@
 	<title>
 		{`${$WEBUI_NAME}`}
 	</title>
-	<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
 </svelte:head>
 
 <style>
@@ -160,17 +161,25 @@
 	.animate-border::before {
 		content: '';
 		position: absolute;
-		inset: -2px;
-		background: linear-gradient(90deg, #00ffff, #bf00ff, #00ffff);
-		background-size: 200% 100%;
-		animation: borderGradient 3s linear infinite;
+		inset: -1px;
+		background: linear-gradient(
+			45deg,
+			rgba(0, 255, 255, 0.1),
+			rgba(0, 255, 255, 0.2),
+			rgba(141, 255, 249, 0.3),
+			rgba(0, 255, 255, 0.2),
+			rgba(0, 255, 255, 0.1)
+		);
+		background-size: 200% 200%;
+		animation: borderGradient 4s linear infinite;
 		border-radius: 1rem;
 		z-index: -1;
 	}
 
 	@keyframes borderGradient {
 		0% { background-position: 0% 0%; }
-		100% { background-position: 200% 0%; }
+		50% { background-position: 100% 100%; }
+		100% { background-position: 0% 0%; }
 	}
 
 	@keyframes gradient {
@@ -180,9 +189,13 @@
 	}
 
 	.mystic-text {
-		font-family: 'Cinzel', serif;
-		text-shadow: 0 0 15px rgba(141, 255, 249, 0.2);
-		letter-spacing: 0.05em;
+		font-family: 'Ma Shan Zheng', '华文行楷', STXingkai, '楷体', KaiTi, serif;
+		text-shadow: 
+			0 0 15px rgba(141, 255, 249, 0.3),
+			0 0 30px rgba(141, 255, 249, 0.2);
+		letter-spacing: 0.2em;
+		font-weight: 400;
+		-webkit-text-stroke: 0.5px rgba(141, 255, 249, 0.3);
 	}
 
 	.input-mystic {
@@ -201,7 +214,7 @@
 		background: rgba(0, 0, 0, 0.7);
 		border: 1px solid rgba(141, 255, 249, 0.2);
 		color: #8DFFF9;
-		font-family: 'Cinzel', serif;
+		font-family: 'Noto Serif SC', '楷体', KaiTi, serif;
 		letter-spacing: 0.1em;
 		transition: all 0.3s ease;
 	}
@@ -267,7 +280,7 @@
 				{:else}
 					<div class="my-auto pb-10 w-full">
 						<form
-							class="flex flex-col justify-center backdrop-blur-lg bg-black/30 p-8 rounded-2xl animate-border"
+							class="flex flex-col justify-center p-8 rounded-2xl animate-border"
 							on:submit={(e) => {
 								e.preventDefault();
 								submitHandler();
