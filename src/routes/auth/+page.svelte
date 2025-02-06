@@ -105,7 +105,7 @@
 		await setSessionUser(sessionUser);
 	};
 
-	let onboarding = false;
+	let onboarding = true;
 
 	onMount(async () => {
 		if ($user !== undefined) {
@@ -117,7 +117,7 @@
 		if (($config?.features.auth_trusted_header ?? false) || $config?.features.auth === false) {
 			await signInHandler();
 		} else {
-			onboarding = $config?.onboarding ?? false;
+			onboarding = true;
 		}
 	});
 </script>
@@ -184,9 +184,7 @@
 						>
 							<div class="mb-1">
 								<div class=" text-2xl font-medium">
-									{#if $config?.onboarding ?? false}
-										{$i18n.t(`Get started with {{WEBUI_NAME}}`, { WEBUI_NAME: $WEBUI_NAME })}
-									{:else if mode === 'ldap'}
+									{#if mode === 'ldap'}
 										{$i18n.t(`Sign in to {{WEBUI_NAME}} with LDAP`, { WEBUI_NAME: $WEBUI_NAME })}
 									{:else if mode === 'signin'}
 										{$i18n.t(`Sign in to {{WEBUI_NAME}}`, { WEBUI_NAME: $WEBUI_NAME })}
@@ -195,7 +193,7 @@
 									{/if}
 								</div>
 
-								{#if $config?.onboarding ?? false}
+								{#if mode === 'signup'}
 									<div class=" mt-1 text-xs font-medium text-gray-500">
 										ⓘ {$WEBUI_NAME}
 										{$i18n.t(
@@ -280,12 +278,10 @@
 										>
 											{mode === 'signin'
 												? $i18n.t('Sign in')
-												: ($config?.onboarding ?? false)
-													? $i18n.t('Create Admin Account')
-													: $i18n.t('Create Account')}
+												: $i18n.t('Create Account')}
 										</button>
 
-										{#if $config?.features.enable_signup && !($config?.onboarding ?? false)}
+										{#if $config?.features.enable_signup}
 											<div class=" mt-4 text-sm text-center">
 												{mode === 'signin'
 													? $i18n.t("Don't have an account?")
@@ -429,7 +425,7 @@
 									type="button"
 									on:click={() => {
 										if (mode === 'ldap')
-											mode = ($config?.onboarding ?? false) ? 'signup' : 'signin';
+											mode = 'signin';
 										else mode = 'ldap';
 									}}
 								>
