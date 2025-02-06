@@ -144,8 +144,7 @@
 	<title>
 		{`${$WEBUI_NAME}`}
 	</title>
-	<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;500&display=swap" rel="stylesheet">
 </svelte:head>
 
 <style>
@@ -164,11 +163,11 @@
 		inset: -1px;
 		background: linear-gradient(
 			45deg,
-			rgba(0, 255, 255, 0.1),
-			rgba(0, 255, 255, 0.2),
+			rgba(141, 255, 249, 0.2),
+			rgba(141, 255, 249, 0.25),
 			rgba(141, 255, 249, 0.3),
-			rgba(0, 255, 255, 0.2),
-			rgba(0, 255, 255, 0.1)
+			rgba(141, 255, 249, 0.25),
+			rgba(141, 255, 249, 0.2)
 		);
 		background-size: 200% 200%;
 		animation: borderGradient 4s linear infinite;
@@ -189,41 +188,80 @@
 	}
 
 	.mystic-text {
-		font-family: 'Ma Shan Zheng', '华文行楷', STXingkai, '楷体', KaiTi, serif;
+		font-family: 'ZCOOL XiaoWei', 'Noto Serif SC', '思源宋体', 'Source Han Serif SC', serif;
 		text-shadow: 
 			0 0 15px rgba(141, 255, 249, 0.3),
 			0 0 30px rgba(141, 255, 249, 0.2);
-		letter-spacing: 0.2em;
+		letter-spacing: 0.15em;
 		font-weight: 400;
 		-webkit-text-stroke: 0.5px rgba(141, 255, 249, 0.3);
 	}
 
 	.input-mystic {
-		background: rgba(0, 0, 0, 0.6);
+		background: rgba(255, 255, 255, 0.03);
 		border: 1px solid rgba(141, 255, 249, 0.1);
-		color: #8DFFF9;
+		color: rgba(255, 255, 255, 0.9);
 		transition: all 0.3s ease;
+		font-family: 'Noto Serif SC', '思源宋体', serif;
+		letter-spacing: 0.05em;
 	}
 
 	.input-mystic:focus {
 		border-color: rgba(141, 255, 249, 0.3);
-		box-shadow: 0 0 15px rgba(141, 255, 249, 0.1);
+		box-shadow: 0 0 15px rgba(141, 255, 249, 0.3);
+		background: rgba(255, 255, 255, 0.05);
 	}
 
 	.btn-mystic {
-		background: rgba(0, 0, 0, 0.7);
+		background: linear-gradient(135deg, rgba(141, 255, 249, 0.1), rgba(141, 255, 249, 0.15));
 		border: 1px solid rgba(141, 255, 249, 0.2);
-		color: #8DFFF9;
-		font-family: 'Noto Serif SC', '楷体', KaiTi, serif;
+		color: rgba(255, 255, 255, 0.95);
+		font-family: 'Noto Serif SC', '思源宋体', serif;
 		letter-spacing: 0.1em;
-		transition: all 0.3s ease;
+		transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		backdrop-filter: blur(5px);
 	}
 
 	.btn-mystic:hover {
-		background: rgba(0, 0, 0, 0.8);
+		background: linear-gradient(135deg, rgba(141, 255, 249, 0.15), rgba(141, 255, 249, 0.2));
 		border-color: rgba(141, 255, 249, 0.4);
-		box-shadow: 0 0 20px rgba(141, 255, 249, 0.2);
-		transform: translateY(-2px);
+		box-shadow: 0 0 20px rgba(141, 255, 249, 0.3);
+		transform: translateY(-2px) scale(1.02);
+	}
+
+	.mode-switch {
+		position: relative;
+		overflow: hidden;
+	}
+
+	.mode-switch-enter {
+		animation: slideIn 0.3s ease forwards;
+	}
+
+	.mode-switch-exit {
+		animation: slideOut 0.3s ease forwards;
+	}
+
+	@keyframes slideIn {
+		from {
+			opacity: 0;
+			transform: translateY(10px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@keyframes slideOut {
+		from {
+			opacity: 1;
+			transform: translateY(0);
+		}
+		to {
+			opacity: 0;
+			transform: translateY(-10px);
+		}
 	}
 </style>
 
@@ -253,9 +291,9 @@
 						class="w-20 rounded-xl dark:invert hover:scale-110 transition-transform duration-300"
 						alt="logo"
 					/>
-					<div class="absolute inset-0 rounded-xl shadow-[0_0_15px_rgba(0,255,255,0.15)] group-hover:shadow-[0_0_25px_rgba(0,255,255,0.25)] transition-shadow duration-300"></div>
+					<div class="absolute inset-0 rounded-xl shadow-[0_0_15px_rgba(0,255,255,0.3)] group-hover:shadow-[0_0_25px_rgba(0,255,255,0.4)] transition-shadow duration-300"></div>
 				</div>
-				<div class="text-2xl font-medium mystic-text text-transparent bg-clip-text bg-gradient-to-r from-teal-200 via-emerald-200 to-cyan-200 animate-gradient">
+				<div class="text-2xl font-medium mystic-text text-transparent bg-clip-text bg-gradient-to-r from-cyan-100 via-teal-100 to-emerald-100 animate-gradient">
 					{$WEBUI_NAME}
 				</div>
 			</div>
@@ -287,13 +325,17 @@
 							}}
 						>
 							<div class="mb-6">
-								<div class="text-2xl font-medium mystic-text bg-gradient-to-r from-teal-200 via-emerald-200 to-cyan-200 bg-clip-text text-transparent animate-gradient">
+								<div class="text-2xl font-medium mystic-text bg-gradient-to-r from-cyan-100 via-teal-100 to-emerald-100 bg-clip-text text-transparent animate-gradient mode-switch">
 									{#if mode === 'ldap'}
 										{$i18n.t(`Sign in to {{WEBUI_NAME}} with LDAP`, { WEBUI_NAME: $WEBUI_NAME })}
 									{:else if mode === 'signup'}
-										{$i18n.t(`Sign up to {{WEBUI_NAME}}`, { WEBUI_NAME: $WEBUI_NAME })}
+										<div class="mode-switch-enter">
+											{$i18n.t(`Sign up to {{WEBUI_NAME}}`, { WEBUI_NAME: $WEBUI_NAME })}
+										</div>
 									{:else}
-										{$i18n.t(`Sign in to {{WEBUI_NAME}}`, { WEBUI_NAME: $WEBUI_NAME })}
+										<div class="mode-switch-enter">
+											{$i18n.t(`Sign in to {{WEBUI_NAME}}`, { WEBUI_NAME: $WEBUI_NAME })}
+										</div>
 									{/if}
 								</div>
 							</div>
@@ -351,9 +393,18 @@
 								<div class="mt-4">
 									<button
 										type="button"
-										class="text-sm text-cyan-400 hover:text-cyan-300 mystic-text"
+										class="text-sm text-cyan-200/90 hover:text-cyan-100 transition-colors duration-300 mystic-text"
 										on:click={() => {
+											const oldMode = mode;
 											mode = mode === 'signin' ? 'signup' : 'signin';
+											const title = document.querySelector('.mode-switch');
+											if (title) {
+												title.classList.add('mode-switch-exit');
+												setTimeout(() => {
+													title.classList.remove('mode-switch-exit');
+													title.classList.add('mode-switch-enter');
+												}, 300);
+											}
 										}}
 									>
 										{#if mode === 'signin'}
