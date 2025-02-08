@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 
 	export let imageUrls = [
 		'/assets/images/adam.jpg',
@@ -9,11 +9,18 @@
 	];
 	export let duration = 5000;
 	let selectedImageIdx = 0;
+	let interval: NodeJS.Timer;
 
 	onMount(() => {
-		setInterval(() => {
-			selectedImageIdx = (selectedImageIdx + 1) % (imageUrls.length - 1);
+		interval = setInterval(() => {
+			selectedImageIdx = (selectedImageIdx + 1) % imageUrls.length;
 		}, duration);
+	});
+
+	onDestroy(() => {
+		if (interval) {
+			clearInterval(interval);
+		}
 	});
 </script>
 

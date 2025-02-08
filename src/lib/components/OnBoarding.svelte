@@ -43,16 +43,16 @@
 							<Marquee
 								duration={5000}
 								words={[
-									$i18n.t('热烈祝贺翔宝贝诞辰'),
-									$i18n.t('特别纪念翔宝贝诞生'),
-									$i18n.t('拉莱耶领袖克苏鲁特别贺梦'),
-									$i18n.t('特邀前往梦中之城庆祝'),
-									$i18n.t('旧日支配者为您献上祝福'),
-									$i18n.t('红帽小狗西昂已做好准备'),
-									$i18n.t('诚邀您前往一同庆祝翔宝贝诞生'),
-									$i18n.t('深潜者已在夹道欢呼'),
-									$i18n.t('来吧来吧，遵从呼唤，纵情欢庆'),
-									$i18n.t('与红帽小狗西昂一起踏上旅途')
+									$i18n.t('Explore the cosmos'),
+									$i18n.t('Unlock mysteries'),
+									$i18n.t('Chart new frontiers'),
+									$i18n.t('Dive into knowledge'),
+									$i18n.t('Discover wonders'),
+									$i18n.t('Ignite curiosity'),
+									$i18n.t('Forge new paths'),
+									$i18n.t('Unravel secrets'),
+									$i18n.t('Pioneer insights'),
+									$i18n.t('Embark on adventures')
 								]}
 							/>
 						</div>
@@ -92,25 +92,36 @@
 	}
 	
 	@keyframes gradient {
-		0% {
-			background-position: 0% 50%;
-		}
-		50% {
-			background-position: 100% 50%;
-		}
-		100% {
-			background-position: 0% 50%;
-		}
+		0% { background-position: 0% 50%; }
+		50% { background-position: 100% 50%; }
+		100% { background-position: 0% 50%; }
 	}
 	
 	.mystic-text {
 		font-family: 'ZCOOL XiaoWei', 'Noto Serif SC', '思源宋体', 'Source Han Serif SC', serif;
-		text-shadow: 
-			0 0 15px rgba(141, 255, 249, 0.3),
-			0 0 30px rgba(141, 255, 249, 0.2);
-		letter-spacing: 0.15em;
-		font-weight: 400;
-		-webkit-text-stroke: 0.5px rgba(141, 255, 249, 0.3);
+		background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96f2d7);
+		background-size: 400% 400%;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		text-shadow: 0 0 20px rgba(78, 205, 196, 0.8), 0 0 40px rgba(78, 205, 196, 0.6), 0 0 60px rgba(78, 205, 196, 0.4);
+		animation: text-gradient 12s ease infinite, text-glow 2s ease-in-out infinite alternate;
+	}
+
+	@keyframes text-gradient {
+		0% { background-position: 0% 50%; }
+		50% { background-position: 100% 50%; }
+		100% { background-position: 0% 50%; }
+	}
+
+	@keyframes text-glow {
+		from {
+			filter: hue-rotate(0deg);
+			text-shadow: 0 0 10px rgba(0, 255, 255, 0.8), 0 0 20px rgba(255, 0, 255, 0.6), 0 0 30px rgba(0, 255, 0, 0.4);
+		}
+		to {
+			filter: hue-rotate(360deg);
+			text-shadow: 0 0 20px rgba(0, 255, 255, 1), 0 0 40px rgba(255, 0, 255, 0.8), 0 0 60px rgba(0, 255, 0, 0.6);
+		}
 	}
 
 	.btn-mystic {

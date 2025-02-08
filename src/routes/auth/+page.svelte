@@ -155,6 +155,17 @@
 
 	.animate-border {
 		position: relative;
+		backdrop-filter: blur(12px);
+		background: rgba(0, 0, 0, 0.4);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+		transition: all 0.3s ease;
+	}
+
+	.animate-border:hover {
+		background: rgba(0, 0, 0, 0.5);
+		border: 1px solid rgba(255, 255, 255, 0.15);
+		box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
 	}
 
 	.animate-border::before {
@@ -163,11 +174,11 @@
 		inset: -1px;
 		background: linear-gradient(
 			45deg,
+			rgba(141, 255, 249, 0.1),
 			rgba(141, 255, 249, 0.2),
-			rgba(141, 255, 249, 0.25),
 			rgba(141, 255, 249, 0.3),
-			rgba(141, 255, 249, 0.25),
-			rgba(141, 255, 249, 0.2)
+			rgba(141, 255, 249, 0.2),
+			rgba(141, 255, 249, 0.1)
 		);
 		background-size: 200% 200%;
 		animation: borderGradient 4s linear infinite;
@@ -189,44 +200,55 @@
 
 	.mystic-text {
 		font-family: 'ZCOOL XiaoWei', 'Noto Serif SC', '思源宋体', 'Source Han Serif SC', serif;
-		text-shadow: 
-			0 0 15px rgba(141, 255, 249, 0.3),
-			0 0 30px rgba(141, 255, 249, 0.2);
-		letter-spacing: 0.15em;
-		font-weight: 400;
-		-webkit-text-stroke: 0.5px rgba(141, 255, 249, 0.3);
+		background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96f2d7);
+		background-size: 400% 400%;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		text-shadow: 0 0 20px rgba(78, 205, 196, 0.8), 0 0 40px rgba(78, 205, 196, 0.6), 0 0 60px rgba(78, 205, 196, 0.4);
+		animation: text-gradient 12s ease infinite, text-glow 2s ease-in-out infinite alternate;
+	}
+
+	@keyframes text-gradient {
+		0% { background-position: 0% 50%; }
+		50% { background-position: 100% 50%; }
+		100% { background-position: 0% 50%; }
+	}
+
+	@keyframes text-glow {
+		from {
+			filter: hue-rotate(0deg);
+			text-shadow: 0 0 10px rgba(0, 255, 255, 0.8), 0 0 20px rgba(255, 0, 255, 0.6), 0 0 30px rgba(0, 255, 0, 0.4);
+		}
+		to {
+			filter: hue-rotate(360deg);
+			text-shadow: 0 0 20px rgba(0, 255, 255, 1), 0 0 40px rgba(255, 0, 255, 0.8), 0 0 60px rgba(0, 255, 0, 0.6);
+		}
 	}
 
 	.input-mystic {
-		background: rgba(255, 255, 255, 0.03);
-		border: 1px solid rgba(141, 255, 249, 0.1);
-		color: rgba(255, 255, 255, 0.9);
+		background: rgba(255, 255, 255, 0.05);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		backdrop-filter: blur(5px);
 		transition: all 0.3s ease;
-		font-family: 'Noto Serif SC', '思源宋体', serif;
-		letter-spacing: 0.05em;
 	}
 
-	.input-mystic:focus {
-		border-color: rgba(141, 255, 249, 0.3);
-		box-shadow: 0 0 15px rgba(141, 255, 249, 0.3);
-		background: rgba(255, 255, 255, 0.05);
+	.input-mystic:hover, .input-mystic:focus {
+		background: rgba(255, 255, 255, 0.08);
+		border: 1px solid rgba(255, 255, 255, 0.2);
 	}
 
 	.btn-mystic {
-		background: linear-gradient(135deg, rgba(141, 255, 249, 0.1), rgba(141, 255, 249, 0.15));
-		border: 1px solid rgba(141, 255, 249, 0.2);
-		color: rgba(255, 255, 255, 0.95);
-		font-family: 'Noto Serif SC', '思源宋体', serif;
-		letter-spacing: 0.1em;
-		transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		background: linear-gradient(45deg, rgba(78, 205, 196, 0.1), rgba(69, 183, 209, 0.1));
+		border: 1px solid rgba(255, 255, 255, 0.1);
 		backdrop-filter: blur(5px);
+		transition: all 0.3s ease;
 	}
 
 	.btn-mystic:hover {
-		background: linear-gradient(135deg, rgba(141, 255, 249, 0.15), rgba(141, 255, 249, 0.2));
-		border-color: rgba(141, 255, 249, 0.4);
-		box-shadow: 0 0 20px rgba(141, 255, 249, 0.3);
-		transform: translateY(-2px) scale(1.02);
+		background: linear-gradient(45deg, rgba(78, 205, 196, 0.2), rgba(69, 183, 209, 0.2));
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		transform: translateY(-1px);
+		box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 	}
 
 	.mode-switch {
@@ -274,7 +296,7 @@
 />
 
 <div class="w-full h-screen max-h-[100dvh] text-white relative">
-	<div class="w-full h-full absolute top-0 left-0 bg-black"></div>
+	<div class="w-full h-full absolute top-0 left-0 bg-black/90"></div>
 
 	<div class="w-full absolute top-0 left-0 right-0 h-8 drag-region" />
 
@@ -293,7 +315,7 @@
 					/>
 					<div class="absolute inset-0 rounded-xl shadow-[0_0_15px_rgba(0,255,255,0.3)] group-hover:shadow-[0_0_25px_rgba(0,255,255,0.4)] transition-shadow duration-300"></div>
 				</div>
-				<div class="text-2xl font-medium mystic-text text-transparent bg-clip-text bg-gradient-to-r from-cyan-100 via-teal-100 to-emerald-100 animate-gradient">
+				<div class="text-2xl font-medium mystic-text">
 					{$WEBUI_NAME}
 				</div>
 			</div>
@@ -318,24 +340,20 @@
 				{:else}
 					<div class="my-auto pb-10 w-full">
 						<form
-							class="flex flex-col justify-center p-8 rounded-2xl animate-border"
+							class="flex flex-col justify-center p-10 rounded-2xl animate-border space-y-6"
 							on:submit={(e) => {
 								e.preventDefault();
 								submitHandler();
 							}}
 						>
-							<div class="mb-6">
-								<div class="text-2xl font-medium mystic-text bg-gradient-to-r from-cyan-100 via-teal-100 to-emerald-100 bg-clip-text text-transparent animate-gradient mode-switch">
+							<div class="mb-2">
+								<div class="text-3xl font-medium mystic-text mode-switch">
 									{#if mode === 'ldap'}
 										{$i18n.t(`Sign in to {{WEBUI_NAME}} with LDAP`, { WEBUI_NAME: $WEBUI_NAME })}
 									{:else if mode === 'signup'}
-										<div class="mode-switch-enter">
-											{$i18n.t(`Sign up to {{WEBUI_NAME}}`, { WEBUI_NAME: $WEBUI_NAME })}
-										</div>
+										{$i18n.t(`Sign up to {{WEBUI_NAME}}`, { WEBUI_NAME: $WEBUI_NAME })}
 									{:else}
-										<div class="mode-switch-enter">
-											{$i18n.t(`Sign in to {{WEBUI_NAME}}`, { WEBUI_NAME: $WEBUI_NAME })}
-										</div>
+										{$i18n.t(`Sign in to {{WEBUI_NAME}}`, { WEBUI_NAME: $WEBUI_NAME })}
 									{/if}
 								</div>
 							</div>

@@ -1,21 +1,28 @@
 <script lang="ts">
 	import { fade, fly } from 'svelte/transition';
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 
 	let idx = 0;
+	let interval: NodeJS.Timer;
 
 	export let className = '';
 	export let words = ['lorem', 'ipsum'];
 	export let duration = 4000;
 
 	onMount(() => {
-		setInterval(async () => {
+		interval = setInterval(async () => {
 			if (idx === words.length - 1) {
 				idx = 0;
 			} else {
 				idx = idx + 1;
 			}
 		}, duration);
+	});
+
+	onDestroy(() => {
+		if (interval) {
+			clearInterval(interval);
+		}
 	});
 </script>
 
