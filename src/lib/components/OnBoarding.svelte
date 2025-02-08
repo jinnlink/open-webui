@@ -39,7 +39,7 @@
 			<div class="flex flex-col justify-end w-full items-center pb-10 text-center">
 				<div class="text-5xl lg:text-7xl font-secondary mystic-text slide-text">
 					<div class="marquee-container">
-						<div class="bg-gradient-to-r from-cyan-100 via-teal-100 to-emerald-100 bg-clip-text text-transparent animate-gradient">
+						<div class="bg-gradient-to-r from-teal-300/90 via-blue-500/80 to-teal-300/90 bg-clip-text text-transparent animate-gradient">
 							<Marquee
 								duration={5000}
 								words={[
@@ -70,7 +70,7 @@
 						>
 							<ArrowRightCircle className="size-6 group-hover:translate-x-1 transition-transform duration-300" />
 						</button>
-						<div class="mt-4 font-primary text-lg font-medium mystic-text text-transparent bg-clip-text bg-gradient-to-r from-cyan-100 via-teal-100 to-emerald-100 animate-gradient">
+						<div class="mt-4 font-primary text-lg font-medium mystic-text text-transparent bg-clip-text bg-gradient-to-r from-teal-300/90 via-blue-500/80 to-teal-300/90 animate-gradient">
 							{$i18n.t(`Get started`)}
 						</div>
 					</div>
@@ -86,9 +86,9 @@
 
 <style>
 	.animate-gradient {
-		background-size: 200% auto;
-		animation: gradient 8s linear infinite;
-		transition: all 0.3s ease;
+		background-size: 300% auto;
+		animation: gradient 15s ease-in-out infinite;
+		transition: all 0.8s ease;
 	}
 	
 	@keyframes gradient {
@@ -99,11 +99,11 @@
 	
 	.mystic-text {
 		font-family: 'ZCOOL XiaoWei', 'Noto Serif SC', '思源宋体', 'Source Han Serif SC', serif;
+		text-shadow: 0 0 25px rgba(45, 212, 191, 0.2);
 		background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96f2d7);
 		background-size: 400% 400%;
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
-		text-shadow: 0 0 20px rgba(78, 205, 196, 0.8), 0 0 40px rgba(78, 205, 196, 0.6), 0 0 60px rgba(78, 205, 196, 0.4);
 		animation: text-gradient 12s ease infinite, text-glow 2s ease-in-out infinite alternate;
 	}
 
@@ -115,12 +115,10 @@
 
 	@keyframes text-glow {
 		from {
-			filter: hue-rotate(0deg);
-			text-shadow: 0 0 10px rgba(0, 255, 255, 0.8), 0 0 20px rgba(255, 0, 255, 0.6), 0 0 30px rgba(0, 255, 0, 0.4);
+			text-shadow: 0 0 20px rgba(45, 212, 191, 0.2);
 		}
 		to {
-			filter: hue-rotate(360deg);
-			text-shadow: 0 0 20px rgba(0, 255, 255, 1), 0 0 40px rgba(255, 0, 255, 0.8), 0 0 60px rgba(0, 255, 0, 0.6);
+			text-shadow: 0 0 30px rgba(45, 212, 191, 0.3);
 		}
 	}
 

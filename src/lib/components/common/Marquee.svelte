@@ -7,7 +7,7 @@
 
 	export let className = '';
 	export let words = ['lorem', 'ipsum'];
-	export let duration = 4000;
+	export let duration = 5000;
 
 	onMount(() => {
 		interval = setInterval(async () => {
@@ -29,9 +29,13 @@
 <div class={className}>
 	<div>
 		{#key idx}
-			<div class=" marquee-item" in:fly={{ y: '30%', duration: 1000 }}>
+			<div class="marquee-item" in:fly|local={{ y: '20%', duration: 1500, easing: quintOut }}>
 				{words.at(idx)}
 			</div>
 		{/key}
 	</div>
 </div>
+
+<script context="module">
+	import { quintOut } from 'svelte/easing';
+</script>
